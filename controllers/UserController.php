@@ -9,7 +9,11 @@ class UserController
                 if ($user->login == $_POST['login'] && $user->password == MD5($_POST['password'])) {
                     $_SESSION['logged'] = true;
                     $_SESSION['user'] = $user;
-                    header('location: gestion-films');
+                    if ($user->role === 'Administrateur') {
+                        header('location: gestion-films');
+                    }else{
+                        header('location: visiteur-films');
+                    }
                 } else {
                     return '<div class="alert alert-danger">Login ou mot de passe est incorrect !</div>';
                     header('location: utilisateur-login');
@@ -97,12 +101,7 @@ class UserController
         }
     }
 
-    public function getAdminPhone()
-    {
-        $phone = User::getPhone();
-        return $phone;
-    }
-
+ 
     public function readAllUsers()
     {
         $Users = User::readAll();

@@ -1,45 +1,63 @@
 <?php
-$film = new FilmController();
-$films = $film->readFilmsByFilters();
+if (isset($_SESSION['user'])) {
+    if (isset($_POST['card-add'])) {
+        $card = new CardController();
+        if ($card->addToCart() == 'ok') {
+            header('location: panier-gestion');
+        } else {
+            header('location: visiteur-films');
+        }
+    }
+}
+if (isset($_POST['find'])) {
+    $film = new FilmController();
+    $films = $film->findFilms();
+} else {
+    $film = new FilmController();
+    $films = $film->readAllFilms();
+}
+
 ?>
 <div class="container">
-    <form method="POST" class="form-horizontal">
-        <div class="row mt-2">
-            <div class="col-md-12 mx-auto">
-                <div class="card">
-                    <div class="card-body bg-dark">
-                        <div class="form-group row">
-                            <div class="col-sm-2">
-                                <label for="filterKilometrageMin" class="control-label">Kilometrage min:</label>
-                                <input type="number" name="filtreKilometrageMin" id="filtreKilometrageMin" min="10" class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-sm-2">
-                                <button type="submit" name="submit" class="btn btn-light">Filtrer</button>
-                            </div>
-                        </div>
+    <div class="row mt-2">
+        <div class="col-md-6 mx-auto">
+            <div class="card">
+                <div class="card-body bg-dark">
+                    <div class="col-md-8">
+                        <form method="POST" class="float-right d-flex flex-row">
+                            <input type="text ml-2" class="form-control" name="search" value="<?php echo isset($_POST['search']) ? $_POST['search'] : "" ?>" placeholder="Titre/Realisateur">
+                            <button class="btn btn-primary ml-2 " type="submit" name="find"><i class="fa fa-search"></i></button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
+
     <div class="row mt-4">
-        <?php foreach ($services as $service) { ?>
+        <?php foreach ($films as $film) { ?>
             <div class="col-md-4 mb-4">
-                <div class="card bg-dark">
-                    <img src="<?= $service['image']; ?>" class="card-img-top image" alt="<?= $service['nom']; ?>">
+                <div class="card bg-dark card-hover">
+                    <img src="<?= $film['image']; ?>" class="card-img-top image" alt="<?= $film['title']; ?>">
                     <div class="card-body">
-                        <h5 class="card-title"><?= $service['nom']; ?></h5>
-                        <p class="card-text">Description: <?= $service['description']; ?></p>
+                        <h4 class="card-title"><?= $film['title']; ?></h4>
+                        <p class="card-text">Prix: <?= $film['price']; ?></p>
                         <form method="post">
-                            <input type="hidden" name="id" value="<?php echo $service['id']; ?>">
-                            <button type="submit" formaction="http://localhost/movies-system/add-card" class="btn btn-light">Contacter l'atelier</button>
+                            <input type="hidden" name="movie_id" value="<?php echo $film['id']; ?>">
+                            <button type="submit" formaction="http://localhost/movies-system/film-details" class="btn btn-light">Détail</button>
+                            <?php if (!isset($_SESSION['user'])) { ?>
+                                <button type="submit" formaction="http://localhost/movies-system/utilisateur-login" class="btn btn-primary">Ajouter au panier</button>
                         </form>
+                    <?php } else { ?>
+                        <form method="post">
+                            <input type="hidden" name="movie_id" value="<?php echo $film['id']; ?>">
+                            <input type="hidden" name="user_id" value="<?php echo $_SESSION['user']->id; ?>">
+                            <button type="submit" name="card-add" class="btn btn-primary">Ajouter au panier</button>
+                        </form>
+                    <?php } ?>
                     </div>
                 </div>
             </div>
         <?php }; ?>
     </div>
 </div>
-<script src="/movies-system/public/js/validate-filtres.js" defer></script>

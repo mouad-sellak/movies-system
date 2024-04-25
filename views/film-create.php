@@ -15,39 +15,33 @@ if (isset($_POST['submit'])) {
                     <a href="http://localhost/movies-system/gestion-films" class="btn btn-light mb-2"><i class="fa fa-home"></i></a>
                     <form method="post" onsubmit="return validateForm();" enctype="multipart/form-data">
                         <div class="form-group">
-                            <label class="control-label" for="nom">Nom*</label>
-                            <input type="text" class="form-control deblock" name="nom">
-                            <span id="controleNom"></span>
-                            <strong id="explicationNom"></strong>
+                            <label class="control-label" for="nom">Titre*</label>
+                            <input type="text" class="form-control deblock" name="title">
                         </div>
                         <div class="form-group">
-                            <label class="control-label" for="caracteristiques">Caracteristiques*</label>
-                            <textarea class="form-control deblock" name="caracteristiques"></textarea>
-                            <span id="controleCaracteristiques"></span>
-                            <strong id="explicationCaracteristiques"></strong>
+                            <label class="control-label" for="category">Category*</label>
+                            <input type="text" class="form-control deblock" name="category">
                         </div>
                         <div class="form-group">
-                            <label class="control-label" for="moteur">Moteur*</label>
-                            <input type="text" class="form-control deblock" name="moteur">
-                            <span id="controleMoteur"></span>
-                            <strong id="explicationMoteur"></strong>
+                            <label class="control-label" for="director">Realisateur*</label>
+                            <input type="text" class="form-control deblock" name="director">
                         </div>
                         <div class="form-group">
-                            <label class="control-label" for="annee">Annee de mise en circulation*</label>
-                            <input type="number" class="form-control" name="annee" min="1900" max="2023">
+                            <label class="control-label" for="director">Acteurs*</label>
+                            <textarea class="form-control deblock" name="actors"></textarea>
                         </div>
                         <div class="form-group">
-                            <label class="control-label" for="kilometrage">Kilometrage*</label>
-                            <input type="number" class="form-control" name="kilometrage" min="10">
+                            <label class="control-label" for="director">Date de sortie*</label>
+                            <input type="date" class="form-control" name="date_sortie">
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="prix">Prix($)*</label>
-                            <input type="number" class="form-control" name="prix" min="0">
+                            <input type="number" class="form-control" name="price" min="0">
                         </div>
-                        <label for="images">Images :</label>
-                        <input type="file" name="images[]" id="images" required multiple accept="public/images/films/*" ><br>
+                        <label for="images">Image :</label>
+                        <input type="file" name="image" id="image" required  accept="public/images/films/*"><br>
                         <div class="form-group">
-                            <button type="submit" name="submit" disabled class="btn btn-light">Valider</button>
+                            <button type="submit" name="submit"  class="btn btn-light">Valider</button>
                         </div>
                     </form>
                 </div>
@@ -55,4 +49,3 @@ if (isset($_POST['submit'])) {
         </div>
     </div>
 </div>
-<script src="/movies-system/public/js/film-create-validate.js"></script>

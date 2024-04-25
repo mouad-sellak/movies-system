@@ -21,7 +21,7 @@ if (isset($_POST['submit'])) {
                         </div>
                         <div class="form-group">
                             <label for="password" class="form-label">Mot de passe*</label>
-                            <input type="password" placeholder="Veuillez inserer votre mot de passe à 8 chiffre" class="form-control" name="password">
+                            <input type="password"  class="form-control" name="password">
                         </div>
                         <div class="form-group">
                             <div class="form-check">

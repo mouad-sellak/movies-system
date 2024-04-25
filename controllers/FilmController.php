@@ -5,12 +5,13 @@ class FilmController
     public function createFilm()
     {
         $film = array(
-            'nom' => $_POST['nom'],
-            'caracteristiques' => $_POST['caracteristiques'],
-            'moteur' => $_POST['moteur'],
-            'annee' => $_POST['annee'],
-            'kilometrage' => $_POST['kilometrage'],
-            'prix' => $_POST['prix']
+            'title' => $_POST['title'],
+            'category' => $_POST['category'],
+            'director' => $_POST['director'],
+            'actors' => $_POST['actors'],
+            'price' => $_POST['price'],
+            'image' => $_POST['image'],
+            'date_sortie' => $_POST['date_sortie']
         );
         $result = Film::create($film);
         if ($result === 'ok') {
@@ -20,23 +21,12 @@ class FilmController
         }
     }
 
-
-    public function updateFilm()
+    public function readAllFilms()
     {
-        $film = array(
-            'id' => $_POST['id'],
-            'nom' => $_POST['nom'],
-            'caracteristiques' => $_POST['caracteristiques'],
-            'moteur' => $_POST['moteur'],
-            'annee' => $_POST['annee'],
-            'kilometrage' => $_POST['kilometrage'],
-            'prix' => $_POST['prix']
-        );
-        $result = Film::update($film);
-        if ($result == 'ok') {
-            header('location: gestion-films');
-        }
+        $Film = Film::readAll();
+        return $Film;
     }
+
 
 
     public function readFilm($id)
@@ -45,21 +35,11 @@ class FilmController
         return $Film;
     }
 
-
-    public function readFilmsByFilters()
-    {
-        $filters = array();
-        if (isset($_POST['submit'])) {
-            $filters = array(
-                'filtreKilometrageMin' => $_POST['filtreKilometrageMin'],
-                'filtreKilometrageMax' => $_POST['filtreKilometrageMax'],
-                'filtreAnneeMin' => $_POST['filtreAnneeMin'],
-                'filtreAnneeMax' => $_POST['filtreAnneeMax'],
-                'filtrePrixMin' => $_POST['filtrePrixMin'],
-                'filtrePrixMax' => $_POST['filtrePrixMax']
-            );
+    public function findFilms(){
+        if(isset($_POST['search'])){
+            $data=array('search'=>$_POST['search']);
         }
-        $films = Film::readByFilters($filters);
+        $films = Film::find($data);
         return $films;
     }
 
@@ -72,5 +52,12 @@ class FilmController
                 header('location: gestion-films');
             }
         }
+    }
+
+    public function getAvis()
+    {
+        $id = $_POST['movie_id'];
+        $avis = Film::getMovieAvis($id);
+        return $avis;
     }
 }

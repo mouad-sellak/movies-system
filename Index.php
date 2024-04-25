@@ -5,6 +5,10 @@ include('views/includes/NavBar.php');
 $gestionPages = [
     'gestion-films', 'film-create', 'film-details', 'film-delete', 'film-update',
     'gestion-utilisateurs', 'utilisateur-create', 'utilisateur-delete', 'utilisateur-profile', 'utilisateur-change-password', 'utilisateur-logout',
+    'gestion-panier', 'panier-add', 'panier-remove', 'panier-update',
+    'visiteur-films',
+    'film-details',
+    'utilisateur-login',
 ];
 $visiteurPages = [
     'visiteur-films',
